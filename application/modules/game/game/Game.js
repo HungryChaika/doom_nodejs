@@ -12,6 +12,15 @@ class Game {
         const mainInterval = setInterval(() => this.update(), 1000);
     }
 
+
+    changeCameraRotationGamer( rotationParams, token) {
+        this.gamers[token].changeCameraRotation(rotationParams);
+    }
+
+    changePositionGamer(position, token) {
+        this.gamers[token].changePosition(position);
+    }
+
     moveGamer(direction, token) {
         this.gamers[token].move(direction);
     }
@@ -28,9 +37,9 @@ class Game {
     }
 
     joinGame(token) {
-        const x = Math.random();
-        const y = Math.random();
-        const z = Math.random();
+        const x = 5 //Math.random();
+        const y = 10 //Math.random();
+        const z = 30 //Math.random();
         this.gamers[token] = new Gamer({ x, y, z });
         //...
         return this.getScene();

@@ -6,12 +6,13 @@ const Direction = Object.freeze({
 })
 
 class Gamer {
-    constructor({ x, y, z, hp = 100, direction = {x:0, y:0, z:0} }) {
+    constructor({ x, y, z, hp = 100, direction = {x:0, y:0, z:0} }, rotation = {x:0, y:0}) {
         this.hp = hp;
         this.x = x;
         this.y = y;
         this.z = z;
         this.direction = direction;
+        this.rotation = rotation;
     }
 
     move(direction, speed) {
@@ -30,6 +31,18 @@ class Gamer {
             }
         }
     }
+
+    changeCameraRotation(rotationParams) {
+        // rotationParams { x, y }
+        this.rotation = rotationParams;
+    }
+
+    changePosition(position) {
+        // position { x, z }
+        this.x = position.x;
+        this.z = position.z;
+    }
+
 }
 
 module.exports = Gamer;

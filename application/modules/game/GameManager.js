@@ -33,6 +33,8 @@ class GameManager extends Module {
             socket.on(this.MESSAGES.LEAVE_GAME, (data) => this.leaveGame(data, socket));
             socket.on(this.MESSAGES.SPEED_UP, () => this.speedUp(socket));
             socket.on(this.MESSAGES.SPEED_DOWN, () => this.speedDown(socket));
+            socket.on(this.MESSAGES.CHANGE_CAMERA_ROTATION, (data) => this.changeCameraRotation(data));
+            socket.on(this.MESSAGES.CHANGE_POSITION, (data) => this.changePosition(data));
 
             socket.on('disconnect', () => {
                
@@ -40,6 +42,34 @@ class GameManager extends Module {
         });
     }
 
+
+    changeCameraRotation(data) {
+        const { rotationParams, gameName, token } = data;
+        const game = this.games.find((game) => game.name === gameName);
+        if(game) {
+            game.changeCameraRotationGamer(rotationParams, token);
+            for(let gamer in game) {
+                if(gamer) {
+                    
+                };
+            };
+        };
+        
+    }
+
+    changePosition(data) {
+        const { position, gameName, token } = data;
+        const game = this.games.find((game) => game.name === gameName);
+        if(game) {
+            game.changePositionGamer(position, token);
+            for(let gamer in game) {
+                if(gamer) {
+                    
+                };
+            };
+        };
+        
+    }
 
     speedUp(socket) {
         socket.emit(this.MESSAGES.SPEED_CHANGE, {result: 'up'});
