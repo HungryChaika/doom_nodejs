@@ -89,9 +89,21 @@ class GameManager extends Module {
         const { gameName, token } = data;
         const scene = this.games.find((game) => game.name === gameName).joinGame(token);
         if (scene) {
+            
+            
+            socket.join(gameName);
+            const info = {
+                x: scene.gamers[token].x ,
+                y: scene.gamers[token].y ,
+                z: scene.gamers[token].x ,
+                rotation: scene.gamers[token].rotation
+            };
+            socket.to(gameName).emit(this.MESSAGES.INFO_ABOUT_THE_GAMERS, info );
+
+
             const games = this.games.map((elem) => elem.getData());
             this.io.emit(this.MESSAGES.GET_GAMES, games);
-            return socket.emit(this.MESSAGES.JOIN_GAME, { result: true, gameName, scene });
+            return socket.emit(this.MESSAGES.JOIN_GAME, { result: true, gameName });
         }
         return socket.emit(this.MESSAGES.JOIN_GAME, { result: false });
     }
