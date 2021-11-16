@@ -12,17 +12,16 @@ class Game {
         const mainInterval = setInterval(() => this.update(), 1000);
     }
 
-
-    changeCameraRotationGamer( rotationParams, token) {
-        this.gamers[token].changeCameraRotation(rotationParams);
-    }
-
     changePositionGamer(position, token) {
         this.gamers[token].changePosition(position);
     }
 
     moveGamer(direction, token) {
         this.gamers[token].move(direction);
+    }
+
+    changeRotationGamer( rotationParams, token) {
+        this.gamers[token].changeRotation(rotationParams);
     }
 
     getData() {
@@ -68,7 +67,11 @@ class Game {
 
     getGameData() {
         // вернуть позиции игроков и выстрелов
-        return null;
+
+        return {
+            name: this.name,
+            gamers: this.gamers
+        };
     }
 
     update() {

@@ -27,7 +27,6 @@ const SETTINGS = {
         USER_LEAVE_CHAT: 'USER_LEAVE_CHAT',
         MOVE: 'MOVE',
         STOP_MOVE: 'STOP_MOVE',
-        CHANGE_DIRECTION: 'CHANGE_DIRECTION',
         GET_SCENE: 'GET_SCENE',
         GET_NAMES: 'GET_NAMES',
         SPEED_UP: 'SPEED_UP',
