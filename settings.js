@@ -46,13 +46,14 @@ const SETTINGS = {
             USER_LOGOUT: 'USER_LOGOUT', // пользователь разлогинился
             USER_REGISTRATION: 'USER_REGISTRATION',
             USER_ENTER_ROOM: 'USER_ENTER_ROOM',
-            USER_LEAVE_ROOM: 'USER_LEAVE_ROOM'
+            USER_LEAVE_ROOM: 'USER_LEAVE_ROOM',
+            SEND_GAMERS_INFO: 'SEND_GAMERS_INFO'
             //...
         },
         TRIGGERS: {
             TEST_TRIGGER: 'TEST_TRIGGER',
             GET_ALL_USERS: 'GET_ALL_USERS',
-            GET_ALL_ROOMS: 'GET_ALL_ROOMS'
+            GET_ALL_ROOMS: 'GET_ALL_ROOMS',
             //...
         }
     }

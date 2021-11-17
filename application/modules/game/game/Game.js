@@ -2,26 +2,30 @@ const Gamer = require('./entities/Gamer');
 
 class Game {
 
-    constructor({ callbacks, db, name } = {}) {
+    constructor({ mediator, events, db, name } = {}) {
         this.db = db;
         this.name = name;
         this.gamers = {};
-        const { updateCb } = callbacks;
-        this.updateCb = updateCb;
+        this.mediator = mediator;
+        this.events = events;
         // запустить игру
-        const mainInterval = setInterval(() => this.update(), 1000);
+        const mainInterval = setInterval(() => this.update(), 3000);
     }
 
-    changePositionGamer(position, token) {
+    /* changePositionGamer(position, token) {
         this.gamers[token].changePosition(position);
-    }
+    } */
 
     moveGamer(direction, token) {
-        this.gamers[token].move(direction);
+        if(this.gamers[token]) {
+            this.gamers[token].move(direction);
+        }
     }
 
     changeRotationGamer( rotationParams, token) {
-        this.gamers[token].changeRotation(rotationParams);
+        if(this.gamers[token]) {
+            this.gamers[token].changeRotation(rotationParams);
+        }
     }
 
     getData() {
@@ -66,8 +70,6 @@ class Game {
     }
 
     getGameData() {
-        // вернуть позиции игроков и выстрелов
-
         return {
             name: this.name,
             gamers: this.gamers
@@ -77,7 +79,10 @@ class Game {
     update() {
         // обсчитать изменения, произошедшие на арене (движение игроков и полёт пуль)
         // выяснить, кто помер, кого ударили, в кого что попало и т.д.
-        this.updateCb(this.getGameData());
+        const data = this.getGameData();
+        if(Object.keys(data.gamers).length > 0) {
+            this.mediator.call(this.events.SEND_GAMERS_INFO, data);
+        };
     }
 }
 

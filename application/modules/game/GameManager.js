@@ -1,3 +1,4 @@
+const { prototype } = require('jasmine');
 const Module = require('../Module');
 const Game = require('./game/Game'); // конструктор арены
 
@@ -7,17 +8,20 @@ class GameManager extends Module {
 
         this.games = [
             new Game({ 
-                callbacks: { updateCb: this.updateCb/* : (gameData) => {} */ },
+                mediator: this.mediator,
+                events: this.EVENTS,
                 db: this.db,
                 name: 'firstGame'
             }),
             new Game({ 
-                callbacks: { updateCb: this.updateCb/* : (gameData) => {} */ },
+                mediator: this.mediator,
+                events: this.EVENTS,
                 db: this.db,
                 name: 'secondGame'
             }),
             new Game({ 
-                callbacks: { updateCb: this.updateCb/* : (gameData) => {} */ },
+                mediator: this.mediator,
+                events: this.EVENTS,
                 db: this.db,
                 name: 'thirdGame'
             }),
@@ -40,14 +44,13 @@ class GameManager extends Module {
                
             });
         });
+
+        this.mediator.subscribe(this.EVENTS.SEND_GAMERS_INFO, data => this.updateCb(data));
     }
-// Не работает из-за колбеков, т.к. запускается в Game.js
-    updateCb({ name, gamers}) {
-        console.log(typeof(this.games));
-        const game = this.games.find((game) => game.name === name);
-        if(game) {
-            this.io.to(name).emit(this.MESSAGES.INFO_ABOUT_THE_GAMERS, gamers );
-        }
+
+    updateCb( { name, gamers } ) {
+        console.log("Very Good");
+        this.io.to(name).emit(this.MESSAGES.INFO_ABOUT_THE_GAMERS, gamers );
     }
 
 // Потом удалить
@@ -122,6 +125,9 @@ class GameManager extends Module {
         if (game) {
             const result = game.leaveGame(token);
             if (result) {
+
+                socket.leave(gameName);
+
                 const games = this.games.map((elem) => elem.getData());
                 this.io.emit(this.MESSAGES.GET_GAMES, games);
                 return socket.emit(this.MESSAGES.LEAVE_GAME, { result });

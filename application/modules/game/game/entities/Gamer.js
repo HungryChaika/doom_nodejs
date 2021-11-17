@@ -11,7 +11,7 @@ class Gamer {
         this.x = x;
         this.y = y;
         this.z = z;
-        this.rotation = rotation;
+        this.rotation = rotation; // ПОТОМ УДАЛИТЬ!!! он использовался, когда отправлялся готовый поворот
         //Ходьба
         this.constMove = 0.4;
         //Повороты
@@ -50,8 +50,8 @@ class Gamer {
         this.rotation = rotationParams;
     }
 
-    /*
-    changePosition(position) {
+    
+    /*changePosition(position) {
         // position { x, z }
         this.x = position.x;
         this.z = position.z;
