@@ -37,8 +37,6 @@ class GameManager extends Module {
             socket.on(this.MESSAGES.SPEED_UP, () => this.speedUp(socket));
             socket.on(this.MESSAGES.SPEED_DOWN, () => this.speedDown(socket));
             socket.on(this.MESSAGES.CHANGE_CAMERA_ROTATION, (data) => this.changeRotationGamer(data));
-            //socket.on(this.MESSAGES.CHANGE_CAMERA_ROTATION, (data) => this.changeRotation(data));
-            //socket.on(this.MESSAGES.CHANGE_POSITION, (data) => this.changePosition(data));
 
             socket.on('disconnect', () => {
                
@@ -49,38 +47,8 @@ class GameManager extends Module {
     }
 
     updateCb( { name, gamers } ) {
-        console.log("Very Good");
         this.io.to(name).emit(this.MESSAGES.INFO_ABOUT_THE_GAMERS, gamers );
     }
-
-// Потом удалить
-    /* changeCameraRotation(data) {
-        const { rotationParams, gameName, token } = data;
-        const game = this.games.find((game) => game.name === gameName);
-        if(game) {
-            game.changeCameraRotationGamer(rotationParams, token);
-            for(let gamer in game) {
-                if(gamer) {
-                    
-                };
-            };
-        };
-        
-    }
-// Потом удалить
-    changePosition(data) {
-        const { position, gameName, token } = data;
-        const game = this.games.find((game) => game.name === gameName);
-        if(game) {
-            game.changePositionGamer(position, token);
-            for(let gamer in game) {
-                if(gamer) {
-                    
-                };
-            };
-        };
-        
-    } */
  
     speedUp(socket) {
         socket.emit(this.MESSAGES.SPEED_CHANGE, {result: 'up'});
@@ -101,17 +69,7 @@ class GameManager extends Module {
         const scene = this.games.find((game) => game.name === gameName).joinGame(token);
         if (scene) {
             
-            
             socket.join(gameName);
-            /*
-            const info = {
-                x: scene.gamers[token].x ,
-                y: scene.gamers[token].y ,
-                z: scene.gamers[token].x ,
-                rotation: scene.gamers[token].rotation
-            };
-            socket.to(gameName).emit(this.MESSAGES.INFO_ABOUT_THE_GAMERS, info );
-            */
 
             const games = this.games.map((elem) => elem.getData());
             this.io.emit(this.MESSAGES.GET_GAMES, games);
@@ -137,20 +95,16 @@ class GameManager extends Module {
     }
 
     moveGamer({ gameName, direction, token }) {
-        if (gameName && direction && token) {
-            const game = this.games.find((game) => game.name === gameName);
-            if (game) {
-                game.moveGamer(direction, token);
-            }
+        const game = this.games.find((game) => game.name === gameName);
+        if (game) {
+            game.moveGamer(direction, token);
         }
     }
 
     changeRotationGamer({ rotationParams, gameName, token }) {
-        if(gameName && rotationParams && token) {
-            const game = this.games.find((game) => game.name === gameName);
-            if(game) {
-                game.changeRotationGamer(rotationParams, token);
-        }
+        const game = this.games.find((game) => game.name === gameName);
+        if(game) {
+            game.changeRotationGamer(rotationParams, token);
         }
     }
 

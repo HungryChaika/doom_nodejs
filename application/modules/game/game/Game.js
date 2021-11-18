@@ -9,12 +9,8 @@ class Game {
         this.mediator = mediator;
         this.events = events;
         // запустить игру
-        const mainInterval = setInterval(() => this.update(), 3000);
+        const mainInterval = setInterval(() => this.update(), 100 /* 40 */);
     }
-
-    /* changePositionGamer(position, token) {
-        this.gamers[token].changePosition(position);
-    } */
 
     moveGamer(direction, token) {
         if(this.gamers[token]) {

@@ -11,7 +11,7 @@ class Gamer {
         this.x = x;
         this.y = y;
         this.z = z;
-        this.rotation = rotation; // ПОТОМ УДАЛИТЬ!!! он использовался, когда отправлялся готовый поворот
+        this.rotation = rotation;
         //Ходьба
         this.constMove = 0.4;
         //Повороты
@@ -45,66 +45,12 @@ class Gamer {
         }
     }
 
-    changeRotation(rotationParams) {
-        // rotationParams { x, y }
-        this.rotation = rotationParams;
+    changeRotation({ clientX, clientY, clientWidth, clientHeight }) {
+        this.mousex = - (clientX / clientWidth) * 2 + 1;
+        this.mousey = - (clientY / clientHeight) * 2 + 1;
+        this.rotation.x = this.mousey / this.scale;
+        this.rotation.y = this.mousex / this.scale;
     }
-
-    
-    /*changePosition(position) {
-        // position { x, z }
-        this.x = position.x;
-        this.z = position.z;
-    } */
-
-
-
-
-
-
-
-    calcCos(vect1, vect2) {
-        return this.scalMultForCos(vect1, vect2) / (this.vectModuleForCos(vect1) * this.vectModuleForCos(vect2));
-      }
-    
-      scalMultForCos(vect1, vect2) {
-        return vect1.x * vect2.x + vect1.z * vect2.z;
-      }
-    
-      scalMult(vect1, vect2) {
-        return vect1.x * vect2.x + vect1.y * vect2.y + vect1.z * vect2.z;
-      }
-    
-      vectMult(vect1, vect2) {
-        let x = vect1.y * vect2.z - vect1.z * vect2.y;
-        let y = vect1.z * vect2.x - vect1.x * vect2.z;
-        let z = vect1.x * vect2.y - vect1.y * vect2.x;
-        return { x, y, z };
-      }
-    
-      multVectNum(vect, num) {
-        return { x: vect.x * num, y: vect.y * num, z: vect.z * num };
-      }
-    
-      divVectNum(vect, num) {
-        return { x: vect.x / num, y: vect.y / num, z: vect.z / num };
-      }
-    
-      sumVect(vect1, vect2) {
-        return { x: vect1.x + vect2.x, y: vect1.y + vect2.y, z: vect1.z + vect2.z };
-      }
-    
-      subVect(vect1, vect2) {
-        return { x: vect1.x - vect2.x, y: vect1.y - vect2.y, z: vect1.z - vect2.z };
-      }
-    
-      vectModuleForCos(vect) {
-        return Math.sqrt(vect.x ** 2 + vect.z ** 2);
-      }
-    
-      vectModule(vect) {
-        return Math.sqrt(vect.x ** 2 + vect.y ** 2 + vect.z ** 2);
-      }
 
 }
 
